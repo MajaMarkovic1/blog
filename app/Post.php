@@ -29,4 +29,8 @@ class Post extends Model
             'post_id' => $post_id
         ]);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

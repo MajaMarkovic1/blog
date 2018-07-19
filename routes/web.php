@@ -29,6 +29,15 @@ Route::get('/posts/{id}', 'PostController@show');
 Route::post('/posts', 'PostController@store');
 Route::post('/posts/{id}', 'CommentController@store');
 
+Route::get('/register', 'RegisterController@create');
+Route::post('/register', 'RegisterController@store');
+Route::get('/logout', 'LoginController@destroy');
+
+Route::get('/login', 'LoginController@create')->name('login'); //redirekcija na 
+//login ako nije ulogovan
+Route::post('/login', 'LoginController@store');
+
+
 
 
 // Route::get('/post/{id}', function ($id){

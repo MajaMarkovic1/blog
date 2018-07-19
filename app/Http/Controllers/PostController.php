@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]); 
+        //samo ulogovani mogu da pristupaju svim metodama, 
+        //ostali mogu da pristupe samo index i show
+    }
     public function index()
     {
         $posts = Post::published();
@@ -43,7 +49,8 @@ class PostController extends Controller
         Post::create([
             'title' => request('title'),
             'body' => request('body'),
-            'published' => (bool) request('published')
+            'published' => (bool) request('published'),
+            'user_id' => auth()->user()->id
         ]);
         return redirect('/posts');
     }
