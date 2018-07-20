@@ -9,12 +9,25 @@
 <div class="blog-post">
     <h2 class="blog-post-title">{{ $post->title }}</h2>
     <p class="blog-post-meta">{{$post->created_at}}</p>
-    <p>by {{ $post->user->name}}</p>    
+    @if($post->user->id)
+        <p>by <a href='/users/{{ $post->user->id }}'>{{ $post->user->name}}</a></p>  
+    @endif 
+
+    @if(count($post->tags))
+        <ul class='list-unstyled'>
+            @foreach($post->tags as $tag)
+                <li class='btn btn-primary'>
+                    <a style='color: white;' href='/posts/tags/{{ $tag->name }}'>{{ $tag->name }}</a>
+                </li>
+            @endforeach
+        </ul>
+    @endif
+
     <p> {{$post->body}}</p>
 </div><!-- /.blog-post -->
 
 <h4>Post a comment</h4>
-<form method='POST' action='/posts/{{$post->id}}'>
+<form method='POST' action='/posts/{{$post->id}}/comments'>
     {{ csrf_field() }}
     <div class="form-group">
         <label for="author">Author</label>

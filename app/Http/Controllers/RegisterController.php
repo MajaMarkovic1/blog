@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Http\Middleware\CheckAge;
 use Illuminate\Http\Request;
 
 class RegisterController extends Controller
@@ -10,6 +11,8 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('age', ['only' => 'store']); //primenjivace se samo na store metodu
+        
     }
 
     public function create()
