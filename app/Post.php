@@ -12,7 +12,7 @@ class Post extends Model
     protected $fillable = [
         'title', 'body', 'published', 'user_id'
     ];
-
+    
     protected function published(){
         return self::where('published', 1)->get();
     }
