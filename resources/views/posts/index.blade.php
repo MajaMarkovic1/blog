@@ -13,6 +13,7 @@
 
     <div class="blog-post">
 <!-- action("PostController@show", $post->id) -->
+
         <h2 class="blog-post-title"><a href='/posts/{{$post->id}}' >{{ $post->title }}</a></h2>
         @if($post->user->id)
             <p>by <a href='/users/{{ $post->user->id }}'>{{ $post->user->name}}</a></p>  
@@ -22,7 +23,7 @@
 
     </div><!-- /.blog-post -->
     @endforeach
-
+    
     <nav class='blog-pagination'>
         <a class="btn btn-outline-
         {{ $posts->currentPage() == 1 ? 'secondary disabled' : 'primary' }}"

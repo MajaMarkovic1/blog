@@ -24,15 +24,18 @@
     @endif
 
     <p> {{$post->body}}</p>
+    @if(auth()->check() && auth()->user()->id === $post->user->id)
+        <a class='btn btn-primary' style='background-color: grey;' href='/posts/{{$post->id}}/delete'>Delete post</a>
+    @endif
 </div><!-- /.blog-post -->
+
+@if(auth()->check())
 
 <h4>Post a comment</h4>
 <form method='POST' action='/posts/{{$post->id}}/comments'>
     {{ csrf_field() }}
     <div class="form-group">
-        <label for="author">Author</label>
-        <input name="author" type="text" class="form-control" id="author">
-        @include('partials.error-message', ['fieldName' => 'author'])
+        <input name="author" type="hidden" class="form-control" id="author" value='{{ auth()->user()->name }}'>
     </div>
     <div class="form-group">
         <label for="text">Comment</label>
@@ -40,15 +43,23 @@
         @include('partials.error-message', ['fieldName' => 'text'])
         
     </div>
-    <input name='post_id' type="hidden" class="form-control" id="post_id" value = "{{$post->id}}">
+    <!-- <input name='post_id' type="hidden" class="form-control" id="post_id" value = "{{$post->id}}"> -->
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+@endif
+   
 
+<ul>
 @foreach($post->comment as $comment)
-    <div >{{$comment->author}}</div>
-    <div style='color: grey'>{{$comment->text}}</div>
+    <li  >{{$comment->author}}</li>
+    <li class='list-unstyled' style='color: grey'>{{$comment->text}}</li>
+    @if(auth()->check() && auth()->user()->id === $post->user->id)
+        <a href='/comments/{{$comment->id}}/delete'>Delete</a>
+    @endif 
 @endforeach
+</ul>
+
     
 
 

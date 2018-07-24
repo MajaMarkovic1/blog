@@ -21,14 +21,6 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function addComment($author, $text, $post_id){
-        
-        Comment::create([
-            'author' => $author,
-            'text' => $text,
-            'post_id' => $post_id
-        ]);
-    }
 
     public function user(){
         return $this->belongsTo(User::class);

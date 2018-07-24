@@ -27,7 +27,9 @@ Route::get('/posts', 'PostController@index');
 Route::get('/posts/create', 'PostController@create');
 Route::get('/posts/{id}', 'PostController@show');
 Route::post('/posts', 'PostController@store');
+Route::get('/posts/{id}/delete', 'PostController@destroy');
 Route::post('/posts/{id}/comments', 'CommentController@store');
+Route::get('/comments/{id}/delete', 'CommentController@destroy');
 
 Route::get('/register', 'RegisterController@create');
 Route::post('/register', 'RegisterController@store');
