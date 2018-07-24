@@ -11,7 +11,7 @@ class TagsController extends Controller
    public function showPostsWithTag($tag)
    {  
        $tagModel = Tag::where('name', $tag)->first();
-       $posts = $tagModel->posts;
+       $posts = $tagModel->posts()->paginate(10);
        return view('posts.index', compact('posts'));
    }
 }

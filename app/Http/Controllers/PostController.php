@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Comment;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -17,7 +18,7 @@ class PostController extends Controller
     }
     public function index()
     {
-        $posts = Post::paginate(10);
+        $posts = Post::with('user')->latest()->paginate(10);
         return view('posts.index', compact('posts'));
     }
 
@@ -30,28 +31,33 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::all();
+
+        return view('posts.create', compact('tags'));
     }
 
     public function store()
     {
-        //dd(request()->all());
-        // $post = new Post();
 
-        // $post->title = request('title');
-        // $post->body = request('body');
-        // $post->published = request('published');
+        $this->validate(request(), [
+            'title' => 'required', 
+            'body' => 'required', 
+            'tags' => 'required|array'
+            ]);
 
-        // $post->save();
+        // if (empty(auth()->user())){
+        //     return redirect('/posts');
+        // }
 
-        $this->validate(request(), ['title' => 'required', 'body' => 'required']);
-
-        Post::create([
+        $post = Post::create([
             'title' => request('title'),
             'body' => request('body'),
             'published' => (bool) request('published'),
             'user_id' => auth()->user()->id
         ]);
+        
+        $post->tags()->attach(request('tags'));
+
         return redirect('/posts');
     }
     public function destroy($id)

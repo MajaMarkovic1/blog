@@ -12,7 +12,7 @@
     @foreach($posts as $post)
 
     <div class="blog-post">
-<!-- action("PostController@show", $post->id) -->
+
 
         <h2 class="blog-post-title"><a href='/posts/{{$post->id}}' >{{ $post->title }}</a></h2>
         @if($post->user->id)
@@ -38,4 +38,4 @@
 
 
 @endsection
-<!-- @section('sidebar') -->
+
